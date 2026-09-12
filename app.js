@@ -64,13 +64,17 @@ function loadTodos() {
 }
 
 function persistAndRender() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   renderTodos();
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+  } catch {
+    status.textContent = "Tasks updated, but changes could not be saved in local storage.";
+  }
 }
 
 function renderTodos() {
   if (todos.length === 0) {
-    list.innerHTML = "<li>No tasks yet.</li>";
+    list.innerHTML = "";
     status.textContent = "No tasks in the list.";
     return;
   }
