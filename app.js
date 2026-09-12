@@ -122,5 +122,11 @@ function generateId() {
     return crypto.randomUUID();
   }
 
+  if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
+    const values = new Uint32Array(4);
+    crypto.getRandomValues(values);
+    return Array.from(values, (value) => value.toString(16).padStart(8, "0")).join("-");
+  }
+
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
