@@ -96,6 +96,7 @@ function renderTodos() {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = todo.completed;
+    checkbox.setAttribute("aria-label", `${todo.text} (${todo.completed ? "completed" : "not completed"})`);
     checkbox.dataset.action = "toggle";
     checkbox.dataset.id = todo.id;
 

@@ -33,5 +33,5 @@ Then open `http://localhost:8000`.
 1. Enter a task in the input field and click **Add**.
 2. Use the checkbox to mark a task complete/incomplete.
 3. Click **Delete** to remove a task.
-4. Refresh the page — your list remains saved via `localStorage`.
+4. Refresh the page — your list remains saved via `localStorage` when browser storage writes are available.
 5. If `localStorage` is blocked/unavailable, updates may not persist after refresh.
