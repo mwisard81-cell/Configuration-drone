@@ -16,13 +16,16 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  todos.push({
-    id: generateId(),
-    text,
-    completed: false,
-  });
+  const nextTodos = [
+    ...todos,
+    {
+      id: generateId(),
+      text,
+      completed: false,
+    },
+  ];
 
-  persistAndRender();
+  persistAndRender(nextTodos);
   form.reset();
   input.focus();
 });
@@ -30,16 +33,16 @@ form.addEventListener("submit", (event) => {
 list.addEventListener("change", (event) => {
   if (event.target instanceof HTMLInputElement && event.target.dataset.action === "toggle") {
     const id = event.target.dataset.id;
-    todos = todos.map((todo) => (todo.id === id ? { ...todo, completed: event.target.checked } : todo));
-    persistAndRender();
+    const nextTodos = todos.map((todo) => (todo.id === id ? { ...todo, completed: event.target.checked } : todo));
+    persistAndRender(nextTodos);
   }
 });
 
 list.addEventListener("click", (event) => {
   if (event.target instanceof HTMLButtonElement && event.target.dataset.action === "delete") {
     const id = event.target.dataset.id;
-    todos = todos.filter((todo) => todo.id !== id);
-    persistAndRender();
+    const nextTodos = todos.filter((todo) => todo.id !== id);
+    persistAndRender(nextTodos);
   }
 });
 
@@ -63,12 +66,13 @@ function loadTodos() {
   }
 }
 
-function persistAndRender() {
-  renderTodos();
+function persistAndRender(nextTodos) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextTodos));
+    todos = nextTodos;
+    renderTodos();
   } catch {
-    status.textContent = "Tasks updated, but changes could not be saved in local storage.";
+    status.textContent = "Unable to save changes in local storage.";
   }
 }
 
