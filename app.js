@@ -3,6 +3,7 @@ const STORAGE_KEY = "todo-items";
 const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const list = document.getElementById("todo-list");
+const status = document.getElementById("todo-status");
 
 let todos = loadTodos();
 renderTodos();
@@ -16,7 +17,7 @@ form.addEventListener("submit", (event) => {
   }
 
   todos.push({
-    id: crypto.randomUUID(),
+    id: generateId(),
     text,
     completed: false,
   });
@@ -70,10 +71,12 @@ function persistAndRender() {
 function renderTodos() {
   if (todos.length === 0) {
     list.innerHTML = "<li>No tasks yet.</li>";
+    status.textContent = "No tasks in the list.";
     return;
   }
 
   list.innerHTML = "";
+  status.textContent = `${todos.length} task${todos.length === 1 ? "" : "s"} in the list.`;
 
   for (const todo of todos) {
     const item = document.createElement("li");
@@ -104,4 +107,12 @@ function renderTodos() {
     item.append(label, deleteButton);
     list.appendChild(item);
   }
+}
+
+function generateId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }

@@ -16,7 +16,7 @@ No backend is required.
 
 ### Option 1: Open directly
 
-Open `/home/runner/work/Configuration-drone/Configuration-drone/index.html` in your browser.
+Open `index.html` from the repository root in your browser.
 
 ### Option 2: Run a local static server
 

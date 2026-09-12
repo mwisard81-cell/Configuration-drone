@@ -48,6 +48,12 @@ h1 {
   margin: 1rem 0 0;
 }
 
+.todo-status {
+  margin: 0.75rem 0 0;
+  color: #52606d;
+  min-height: 1.2rem;
+}
+
 .todo-item {
   display: flex;
   align-items: center;
